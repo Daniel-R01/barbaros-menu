@@ -1,0 +1,462 @@
+{
+  "brand": {
+    "name": "Bárbaros Burguer",
+    "shortName": "Bárbaros",
+    "slogan": "Come como un bárbaro",
+    "since": "2014",
+    "address": "cll 7a #9-69 barrio palmarito",
+    "phone": "3124872685",
+    "instagram": "@barbarosburguertau",
+    "whatsappNumber": "573124872685",
+    "fallbackImage": "./assets/brand/logo-vertical-fondo-naranja.jpg"
+  },
+  "theme": {
+    "primary": "#FFA301",
+    "secondary": "#051B39",
+    "light": "#FBFBFA",
+    "white": "#FFFFFF",
+    "accent": "#FFB98D"
+  },
+  "categories": [
+    {
+      "id": "bases",
+      "label": "Bases",
+      "description": "Arma la tuya o pide directo"
+    },
+    {
+      "id": "especialidades",
+      "label": "Especialidades",
+      "description": "Platos destacados de la casa"
+    },
+    {
+      "id": "entradas",
+      "label": "Entradas",
+      "description": "Para compartir o abrir apetito"
+    },
+    {
+      "id": "bebidas",
+      "label": "Bebidas",
+      "description": "Refresca tu pedido"
+    }
+  ],
+  "builderRules": {
+    "comboLabel": "Base + proteína + topping",
+    "allowAnyAddon": true,
+    "maxAddons": null
+  },
+  "addons": {
+    "proteins": [
+      {
+        "id": "prot-carne-burguer",
+        "name": "Carne burguer",
+        "price": 5500
+      },
+      {
+        "id": "prot-filete-pollo",
+        "name": "Filete de pollo",
+        "price": 8000
+      },
+      {
+        "id": "prot-desmechado-pollo",
+        "name": "Desmechado pollo",
+        "price": 2000
+      },
+      {
+        "id": "prot-desmechado-carne",
+        "name": "Desmechado carne",
+        "price": 4000
+      },
+      {
+        "id": "prot-salch-americana",
+        "name": "Salchicha americana",
+        "price": 5000
+      },
+      {
+        "id": "prot-salch-ranchera",
+        "name": "Salchicha ranchera",
+        "price": 2200
+      },
+      {
+        "id": "prot-chorizo",
+        "name": "Chorizo",
+        "price": 5000
+      },
+      {
+        "id": "prot-huevo-codorniz",
+        "name": "Huevo codorniz x4",
+        "price": 2000
+      },
+      {
+        "id": "prot-huevo-frito",
+        "name": "Huevo frito",
+        "price": 2000
+      }
+    ],
+    "toppings": [
+      {
+        "id": "top-tocineta",
+        "name": "Tocineta x2",
+        "price": 3000
+      },
+      {
+        "id": "top-maiz",
+        "name": "Maíz tierno",
+        "price": 2000
+      },
+      {
+        "id": "top-jalapeno",
+        "name": "Jalapeño x6",
+        "price": 3000
+      },
+      {
+        "id": "top-aritos",
+        "name": "Aritos x2",
+        "price": 3000
+      },
+      {
+        "id": "top-queso-crunch",
+        "name": "Queso crunch",
+        "price": 1500
+      },
+      {
+        "id": "top-arepa-frita",
+        "name": "Arepa frita",
+        "price": 2000
+      },
+      {
+        "id": "top-aguacate",
+        "name": "Aguacate porción",
+        "price": 4600
+      },
+      {
+        "id": "top-jamon",
+        "name": "Jamón",
+        "price": 1000
+      },
+      {
+        "id": "top-patacona",
+        "name": "Patacona madura",
+        "price": 5000
+      }
+    ],
+    "freeSauces": [
+      {
+        "id": "salsa-tomate",
+        "name": "Tomate",
+        "price": 0
+      },
+      {
+        "id": "salsa-rosada",
+        "name": "Rosada",
+        "price": 0
+      },
+      {
+        "id": "salsa-tartara",
+        "name": "Tártara",
+        "price": 0
+      }
+    ],
+    "premiumSauces": [
+      {
+        "id": "salsa-barbara",
+        "name": "Bárbara",
+        "price": 2000
+      },
+      {
+        "id": "salsa-big-mac",
+        "name": "Big Mac",
+        "price": 2000
+      },
+      {
+        "id": "salsa-mermelada-tocineta",
+        "name": "Mermelada de tocineta",
+        "price": 2000
+      }
+    ]
+  },
+  "products": [
+    {
+      "id": "base-pan-brioche",
+      "categoryId": "bases",
+      "name": "Burguer en pan brioche",
+      "description": "Incluye proteína 131g, vegetales, queso crunch, papas a la francesa y huevo de codorniz.",
+      "image": "./assets/products/imagen-1779853277356.png",
+      "action": "builder",
+      "variants": [
+        {
+          "id": "res",
+          "label": "Res",
+          "price": 17700
+        },
+        {
+          "id": "pollo",
+          "label": "Pollo",
+          "price": 21000
+        }
+      ],
+      "price": 1
+    },
+    {
+      "id": "base-arepa-maiz-peto",
+      "categoryId": "bases",
+      "name": "Burguer en arepa de maíz peto",
+      "description": "Base crocante de maíz peto con el combo clásico de la casa.",
+      "image": "./assets/products/burger-pan-brioche-02.jpg",
+      "action": "builder",
+      "variants": [
+        {
+          "id": "res",
+          "label": "Res",
+          "price": 19000
+        },
+        {
+          "id": "pollo",
+          "label": "Pollo",
+          "price": 20500
+        }
+      ]
+    },
+    {
+      "id": "base-patacona-madura",
+      "categoryId": "bases",
+      "name": "Burguer patacona madura",
+      "description": "Versión patacona madura con proteína, vegetales, queso crunch y papas.",
+      "image": "./assets/products/patacona-madura-01.jpg",
+      "action": "builder",
+      "variants": [
+        {
+          "id": "res",
+          "label": "Res",
+          "price": 21000
+        },
+        {
+          "id": "pollo",
+          "label": "Pollo",
+          "price": 22000
+        }
+      ]
+    },
+    {
+      "id": "base-aguacate",
+      "categoryId": "bases",
+      "name": "Burguer aguacate",
+      "description": "Base premium con aguacate, combo completo y papas francesas.",
+      "image": "./assets/products/burger-pan-brioche-02.jpg",
+      "action": "builder",
+      "variants": [
+        {
+          "id": "res",
+          "label": "Res",
+          "price": 31000
+        },
+        {
+          "id": "pollo",
+          "label": "Pollo",
+          "price": 33000
+        }
+      ]
+    },
+    {
+      "id": "perro-barbaro-clasico",
+      "categoryId": "bases",
+      "name": "Perro Bárbaro clásico",
+      "description": "Pan artesanal, salchicha americana, queso, papa ripio, salsa de la casa y huevo de codorniz.",
+      "image": "./assets/products/perro-artesanal-mixto-01.jpg",
+      "price": 11000,
+      "action": "add"
+    },
+    {
+      "id": "perro-barbaro-loco",
+      "categoryId": "bases",
+      "name": "Perro Bárbaro loco",
+      "description": "Versión loco del perro bárbaro.",
+      "image": "./assets/products/perro-artesanal-mixto-01.jpg",
+      "price": 18000,
+      "action": "add"
+    },
+    {
+      "id": "perro-barbaro-vaquero",
+      "categoryId": "bases",
+      "name": "Perro Bárbaro vaquero",
+      "description": "Versión vaquero del perro bárbaro.",
+      "image": "./assets/products/perro-artesanal-mixto-01.jpg",
+      "price": 14500,
+      "action": "add"
+    },
+    {
+      "id": "perro-barbaro-americano",
+      "categoryId": "bases",
+      "name": "Perro Bárbaro americano",
+      "description": "Versión americano del perro bárbaro.",
+      "image": "./assets/products/perro-artesanal-mixto-01.jpg",
+      "price": 15800,
+      "action": "add"
+    },
+    {
+      "id": "perro-barbaro-pollo-maiz",
+      "categoryId": "bases",
+      "name": "Perro Bárbaro pollo y maíz",
+      "description": "Versión pollo y maíz del perro bárbaro.",
+      "image": "./assets/products/perro-artesanal-mixto-01.jpg",
+      "price": 14800,
+      "action": "add"
+    },
+    {
+      "id": "salchi-fritos",
+      "categoryId": "bases",
+      "name": "Salchi-fritos",
+      "description": "Papa francesa 200g, queso y huevos de codorniz.",
+      "image": "./assets/products/burger-salchifritos-01.jpg",
+      "price": 10800,
+      "action": "add"
+    },
+    {
+      "id": "esp-mazorcada",
+      "categoryId": "especialidades",
+      "name": "Mazorcada",
+      "description": "Especialidad de la casa.",
+      "image": "./assets/brand/logo-horizontal-naranja.jpg",
+      "price": 28000,
+      "action": "add"
+    },
+    {
+      "id": "esp-costillitas-bbq",
+      "categoryId": "especialidades",
+      "name": "Costillitas BBQ",
+      "description": "Costillas BBQ con acompañamiento de la casa.",
+      "image": "./assets/products/costillitas-bbq-01.jpg",
+      "price": 38000,
+      "action": "add"
+    },
+    {
+      "id": "esp-ensalada",
+      "categoryId": "especialidades",
+      "name": "Ensalada",
+      "description": "Ensalada fresca con proteína y aderezo.",
+      "image": "./assets/products/ensalada-pollo-01.jpg",
+      "price": 21000,
+      "action": "add"
+    },
+    {
+      "id": "esp-arepa-rellena-mixta",
+      "categoryId": "especialidades",
+      "name": "Arepa rellena mixta",
+      "description": "Arepa maíz peto asada rellena con proteína, salsa de la casa, queso y huevos de codorniz.",
+      "image": "./assets/brand/logo-horizontal-naranja.jpg",
+      "price": 13000,
+      "action": "add"
+    },
+    {
+      "id": "esp-arepa-rellena-carne",
+      "categoryId": "especialidades",
+      "name": "Arepa rellena carne",
+      "description": "Arepa maíz peto asada rellena con carne desmechada.",
+      "image": "./assets/brand/logo-horizontal-naranja.jpg",
+      "price": 14500,
+      "action": "add"
+    },
+    {
+      "id": "esp-arepa-rellena-pollo",
+      "categoryId": "especialidades",
+      "name": "Arepa rellena pollo",
+      "description": "Arepa maíz peto asada rellena con pollo desmechado.",
+      "image": "./assets/brand/logo-horizontal-naranja.jpg",
+      "price": 11500,
+      "action": "add"
+    },
+    {
+      "id": "ent-arepitas-fritas",
+      "categoryId": "entradas",
+      "name": "Arepitas fritas",
+      "description": "Arepitas crocantes, perfectas para picar.",
+      "image": "./assets/brand/logo-horizontal-naranja.jpg",
+      "price": 5500,
+      "action": "add"
+    },
+    {
+      "id": "ent-chorizo-arepa",
+      "categoryId": "entradas",
+      "name": "Chorizo y arepa",
+      "description": "Chorizo artesanal con arepa asada.",
+      "image": "./assets/brand/logo-horizontal-naranja.jpg",
+      "price": 6500,
+      "action": "add"
+    },
+    {
+      "id": "ent-aritos-cebolla",
+      "categoryId": "entradas",
+      "name": "Aritos de cebolla",
+      "description": "Aritos de cebolla apanados y crocantes.",
+      "image": "./assets/brand/logo-horizontal-naranja.jpg",
+      "price": 6000,
+      "action": "add"
+    },
+    {
+      "id": "ent-papas-barbaras",
+      "categoryId": "entradas",
+      "name": "Papas Bárbaras",
+      "description": "Papas a la francesa estilo Bárbaros con queso y salsa.",
+      "image": "./assets/brand/logo-horizontal-naranja.jpg",
+      "price": 8000,
+      "action": "add"
+    },
+    {
+      "id": "ent-arepa-quesuda",
+      "categoryId": "entradas",
+      "name": "Arepa quesuda",
+      "description": "Arepa maíz peto asada con mucho queso.",
+      "image": "./assets/products/imagen-1779852527584.png",
+      "price": 5500,
+      "action": "add"
+    },
+    {
+      "id": "beb-limonadas",
+      "categoryId": "bebidas",
+      "name": "Limonadas (clásica, coco, bárbara)",
+      "description": "Limonada natural fresca en tres sabores.",
+      "image": "./assets/products/imagen-1779852475148.png",
+      "price": 9000,
+      "action": "add"
+    },
+    {
+      "id": "beb-jugos-naturales",
+      "categoryId": "bebidas",
+      "name": "Jugos naturales en agua",
+      "description": "Fresa, mora, uva, mango, guanábana, maracuyá, lulo, chamba.",
+      "image": "./assets/products/imagen-1779852398707.png",
+      "price": 8000,
+      "action": "add"
+    },
+    {
+      "id": "beb-postobon",
+      "categoryId": "bebidas",
+      "name": "Postobón 400ml",
+      "description": "Gaseosa Postobón personal 400ml.",
+      "image": "./assets/products/imagen-1779852182575.png",
+      "price": 4000,
+      "action": "add"
+    },
+    {
+      "id": "beb-cocacola",
+      "categoryId": "bebidas",
+      "name": "Coca-Cola 400ml",
+      "description": "Gaseosa Coca-Cola personal 400ml.",
+      "image": "./assets/products/imagen-1779851839925.png",
+      "price": 5000,
+      "action": "add"
+    },
+    {
+      "id": "beb-cerveza-corona",
+      "categoryId": "bebidas",
+      "name": "Cerveza Corona 355ml",
+      "description": "Cerveza Corona bien fría.",
+      "image": "./assets/products/imagen-1779851372805.png",
+      "price": 9000,
+      "action": "add"
+    }
+  ],
+  "admin": {
+    "username": "admin",
+    "passwordHash": "$2a$10$E4WQf/yAf.A1aqdKBL4df.YrFE/5hkByREEIvpEALcmJuvk3d4slq"
+  }
+}

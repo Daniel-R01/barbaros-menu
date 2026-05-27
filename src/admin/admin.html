@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | Bárbaros</title>
+  <style>
+    :root {
+      --orange: #FFA301; --orange-hot: #FF8C00;
+      --navy: #051B39; --navy-soft: #0D2B56; --navy-light: #163B62;
+      --white: #FFF; --bg: #F5F2ED; --surface: #FBF9F5;
+      --text: #0A1628; --muted: #6B7D95; --line: #E4DDD3;
+      --red: #DC2626; --green: #16A34A; --radius: 14px; --radius-sm: 10px;
+      --shadow: 0 2px 12px rgba(5,27,57,.06); --shadow-lg: 0 8px 28px rgba(5,27,57,.1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+      background:var(--bg); color:var(--text);
+      min-height:100vh; -webkit-font-smoothing:antialiased;
+    }
+    button{touch-action:manipulation;cursor:pointer}
+
+    /* HEADER */
+    .adm-head{
+      background:var(--navy); color:var(--white);
+      padding:0 24px; height:56px; display:flex; align-items:center;
+      justify-content:space-between; gap:16px;
+      position:sticky; top:0; z-index:20;
+    }
+    .adm-head__brand{display:flex;align-items:center;gap:10px}
+    .adm-head__logo{
+      height:30px; border-radius:6px;
+    }
+    .adm-head__title{font-size:1rem;font-weight:800;letter-spacing:.02em}
+    .adm-head__actions{display:flex;align-items:center;gap:10px}
+    .adm-head__user{font-size:.78rem;opacity:.7}
+
+    /* LAYOUT */
+    .adm-layout{
+      max-width:1280px; margin:0 auto; padding:20px 24px;
+      display:grid; grid-template-columns:320px 1fr; gap:20px; align-items:start;
+    }
+
+    /* PANELS */
+    .adm-panel{
+      background:var(--white); border-radius:var(--radius);
+      box-shadow:var(--shadow); overflow:hidden;
+    }
+    .adm-panel__head{
+      padding:14px 16px; border-bottom:1px solid var(--line);
+      font-size:.84rem; font-weight:800; color:var(--navy);
+      display:flex; align-items:center; justify-content:space-between; gap:8px;
+    }
+
+    /* LOGIN */
+    .adm-login{
+      max-width:400px; margin:80px auto 0; background:var(--white);
+      border-radius:var(--radius-lg, 20px); box-shadow:var(--shadow-lg);
+      padding:32px 28px; text-align:center;
+    }
+    .adm-login__logo{height:50px;margin-bottom:16px;border-radius:8px}
+    .adm-login h2{font-size:1.2rem;color:var(--navy);margin-bottom:6px}
+    .adm-login p{font-size:.82rem;color:var(--muted);margin-bottom:20px}
+    .adm-field{margin-bottom:14px;text-align:left}
+    .adm-field label{display:block;font-size:.72rem;font-weight:700;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+    .adm-field input{width:100%;border:2px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;font:inherit;font-size:.88rem;transition:border-color .2s}
+    .adm-field input:focus{outline:none;border-color:var(--orange)}
+    .adm-msg{margin-top:10px;font-size:.8rem;font-weight:700}
+    .adm-msg--ok{color:var(--green)}
+    .adm-msg--err{color:var(--red)}
+
+    /* BUTTONS */
+    .adm-btn{
+      border:none; border-radius:99px; padding:10px 20px;
+      font-size:.8rem; font-weight:700; cursor:pointer;
+      transition:all .15s; white-space:nowrap;
+    }
+    .adm-btn:active{transform:scale(.96)}
+    .adm-btn--pri{background:var(--orange);color:var(--navy)}
+    .adm-btn--pri:hover{background:var(--orange-hot)}
+    .adm-btn--sec{background:var(--bg);color:var(--navy)}
+    .adm-btn--sec:hover{background:var(--line)}
+    .adm-btn--danger{background:#FEE2E2;color:var(--red)}
+    .adm-btn--danger:hover{background:#FECACA}
+    .adm-btn--full{width:100%}
+    .adm-btn--sm{padding:6px 14px;font-size:.72rem}
+
+    /* PRODUCT LIST */
+    .adm-list-search{padding:10px 12px}
+    .adm-list-search input{
+      width:100%; border:2px solid var(--line); border-radius:99px;
+      padding:8px 14px; font:inherit; font-size:.82rem;
+      transition:border-color .2s;
+    }
+    .adm-list-search input:focus{outline:none;border-color:var(--orange)}
+    .adm-list{max-height:calc(100vh - 200px);overflow-y:auto}
+    .adm-list-item{
+      width:100%; text-align:left; border:none; border-bottom:1px solid var(--bg);
+      background:var(--white); padding:12px 14px; cursor:pointer;
+      transition:background .15s; display:flex;flex-direction:column;gap:3px;
+    }
+    .adm-list-item:hover{background:var(--surface)}
+    .adm-list-item.active{background:#FFF7ED;border-left:3px solid var(--orange)}
+    .adm-list-item__name{font-size:.84rem;font-weight:700;color:var(--navy)}
+    .adm-list-item__meta{font-size:.68rem;color:var(--muted);display:flex;gap:8px}
+    .adm-badge{
+      font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:99px;
+      text-transform:uppercase;letter-spacing:.03em;
+    }
+    .adm-badge--builder{background:#FFF7ED;color:#C2410C}
+    .adm-badge--add{background:#ECFDF5;color:#065F46}
+    .adm-badge--inquiry{background:#F1F5F9;color:#475569}
+
+    /* EDITOR */
+    .adm-edit{padding:16px}
+    .adm-edit__empty{text-align:center;padding:60px 20px;color:var(--muted)}
+    .adm-edit__empty-icon{font-size:3rem;margin-bottom:12px}
+    .adm-preview{
+      width:100%; aspect-ratio:16/9; object-fit:cover;
+      border-radius:var(--radius-sm); background:var(--bg);
+      overflow:hidden;
+    }
+    .adm-preview--empty{display:flex;align-items:center;justify-content:center;color:var(--muted)}
+    .adm-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .adm-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .adm-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .adm-field--inline label{display:block;font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.03em}
+    .adm-field--inline input,.adm-field--inline select,.adm-field--inline textarea{
+      width:100%; border:2px solid var(--line); border-radius:var(--radius-sm);
+      padding:9px 11px; font:inherit; font-size:.84rem; transition:border-color .2s;
+    }
+    .adm-field--inline input:focus,.adm-field--inline select:focus,.adm-field--inline textarea:focus{outline:none;border-color:var(--orange)}
+    .adm-field--inline textarea{min-height:72px;resize:vertical}
+    .adm-field--inline select{-webkit-appearance:none;background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7D95' d='M6 8L1 3h10z'/%3E%3C/svg%3E") no-repeat right 10px center;padding-right:30px}
+    .field-is-disabled{opacity:.5;pointer-events:none}
+
+    /* VARIANTS BOX */
+    .adm-variants{
+      background:var(--surface); border:1px solid var(--line);
+      border-radius:var(--radius-sm); padding:12px; margin-top:10px;
+    }
+    .adm-variants__title{font-size:.78rem;font-weight:800;color:var(--navy);margin-bottom:8px}
+    .adm-variants__hint{font-size:.68rem;color:var(--muted);margin-bottom:10px}
+    .adm-var-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:end}
+    .adm-var-row input{
+      border:2px solid var(--line); border-radius:var(--radius-sm);
+      padding:8px 10px; font:inherit; font-size:.8rem;
+    }
+    .adm-var-row input:focus{outline:none;border-color:var(--orange)}
+    .adm-var-row .adm-btn--sm{padding:8px 10px}
+    .adm-preview-price{font-size:.72rem;color:var(--muted);margin-top:8px;font-weight:600}
+
+    /* TOAST */
+    .adm-toast{
+      position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(16px);
+      background:var(--navy); color:var(--white); padding:10px 24px;
+      border-radius:99px; font-size:.82rem; font-weight:700;
+      box-shadow:0 8px 24px rgba(5,27,57,.3);
+      opacity:0; pointer-events:none; transition:all .3s; z-index:300;
+    }
+    .adm-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    /* EXTRAS EDITOR */
+    .adm-extras-group{
+      background:var(--surface); border:1px solid var(--line);
+      border-radius:var(--radius-sm); padding:12px; margin-bottom:14px;
+    }
+    .adm-extras-group:last-child{margin-bottom:0}
+    .adm-extras-group__head{
+      display:flex; justify-content:space-between; align-items:flex-start;
+      gap:10px; margin-bottom:10px; padding-bottom:10px;
+      border-bottom:1px solid var(--line);
+    }
+    .adm-extras-group__head strong{
+      display:block; font-size:.8rem; color:var(--navy);
+    }
+    .adm-extras-group__head span{
+      display:block; font-size:.66rem; color:var(--muted); margin-top:2px;
+    }
+    .adm-extras-row{
+      display:flex; gap:8px; margin-bottom:6px; align-items:center;
+    }
+    .adm-extras-input{
+      flex:1; border:2px solid var(--line); border-radius:8px;
+      padding:7px 10px; font:inherit; font-size:.78rem;
+      transition:border-color .2s; min-width:0;
+    }
+    .adm-extras-input:focus{outline:none;border-color:var(--orange)}
+    .adm-extras-input--price{flex:0 0 110px;text-align:right}
+    .adm-extras-del{
+      flex-shrink:0; width:30px; height:30px; border-radius:50%;
+      border:none; background:#FEE2E2; color:var(--red);
+      font-size:.85rem; font-weight:700; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .15s;
+    }
+    .adm-extras-del:hover{background:#FECACA}
+    .adm-extras-empty{
+      font-size:.72rem; color:var(--muted); font-style:italic;
+      padding:8px 0; text-align:center;
+    }
+
+    /* IMAGE POSITION SLIDER */
+    .adm-img-pos{
+      margin-top:8px; padding:8px 10px;
+      background:var(--surface); border-radius:8px;
+    }
+    .adm-img-pos label{
+      display:block; font-size:.68rem; font-weight:700;
+      color:var(--muted); margin-bottom:4px;
+      text-transform:uppercase; letter-spacing:.03em;
+    }
+    .adm-img-pos input[type="range"]{
+      width:100%; height:4px; -webkit-appearance:none;
+      background:var(--line); border-radius:2px; outline:none; cursor:pointer;
+    }
+    .adm-img-pos input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none; width:18px; height:18px;
+      border-radius:50%; background:var(--orange);
+      cursor:pointer; border:2px solid var(--white);
+      box-shadow:0 2px 6px rgba(0,0,0,.15);
+    }
+    .adm-img-pos__labels{
+      display:flex; justify-content:space-between;
+      font-size:.6rem; color:var(--muted); margin-top:2px;
+    }
+
+    /* CROPPER MODAL */
+    .crop-overlay{
+      position:fixed; inset:0; z-index:200;
+      background:rgba(5,27,57,.85);
+      display:none; align-items:center; justify-content:center;
+      padding:20px;
+    }
+    .crop-overlay.is-open{display:flex}
+    .crop-modal{
+      width:100%; max-width:900px;
+      background:var(--white); border-radius:var(--radius);
+      box-shadow:var(--shadow-lg);
+      display:flex; flex-direction:column;
+      max-height:95vh;
+    }
+    .crop-modal__head{
+      padding:12px 18px; border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-shrink:0;
+    }
+    .crop-modal__head h3{font-size:.9rem;font-weight:800;color:var(--navy)}
+    .crop-modal__head .adm-btn--danger{
+      width:32px;height:32px;border-radius:50%;padding:0;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.2rem;line-height:1;
+    }
+    .crop-modal__body{
+      display:flex; flex:1; min-height:350px;
+    }
+    .crop-canvas-wrap{
+      flex:1; min-width:0; min-height:300px;
+      display:flex; align-items:center; justify-content:center;
+      background:#0A0E27;
+    }
+    .crop-canvas-wrap canvas {
+      display:block; cursor:grab;
+      touch-action:none;
+      width:100%; height:auto;
+      max-width:800px;
+    }
+    .crop-canvas-wrap canvas:active { cursor:grabbing }
+    .crop-canvas-wrap img {
+      max-width:100%; display:block;
+    }
+    .crop-preview-panel{
+      width:180px;flex-shrink:0; padding:12px; background:var(--bg);
+      border-left:1px solid var(--line);
+      display:flex;flex-direction:column;gap:10px;
+      overflow-y:auto;
+    }
+    .crop-preview-panel__label{
+      font-size:.64rem;font-weight:700;color:var(--muted);
+      text-transform:uppercase;letter-spacing:.04em;
+    }
+    .crop-preview-box{
+      width:100%; aspect-ratio:16/9; border-radius:6px;
+      overflow:hidden; background:var(--navy);
+    }
+    .crop-preview-box canvas,.crop-preview-box img{
+      width:100%;height:100%;object-fit:cover;display:block;
+    }
+    .crop-modal__tools{
+      padding:10px 18px; border-top:1px solid var(--line);
+      display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+      flex-shrink:0;
+    }
+    .crop-tool-btn{
+      border:none; border-radius:8px; padding:8px 14px;
+      font-size:.74rem; font-weight:700; cursor:pointer;
+      display:flex; align-items:center; gap:5px;
+      background:var(--bg); color:var(--navy);
+      transition:all .15s;
+    }
+    .crop-tool-btn:hover{background:var(--line)}
+    .crop-tool-btn--confirm{
+      background:var(--orange); color:var(--navy);
+      margin-left:auto;
+    }
+    .crop-tool-btn--confirm:hover{background:var(--orange-hot)}
+    .crop-tool-btn:active{transform:scale(.96)}
+
+    @media(max-width:800px){
+      .adm-layout{grid-template-columns:1fr;padding:14px}
+      .adm-grid-2,.adm-grid-3{grid-template-columns:1fr}
+      .crop-modal__body{flex-direction:column;min-height:300px}
+      .crop-canvas-wrap{min-height:250px}
+      .crop-preview-panel{
+        width:100%; flex-direction:row; flex-wrap:wrap;
+        border-left:none; border-top:1px solid var(--line);
+        gap:8px; align-items:center; padding:8px 12px;
+      }
+      .crop-preview-box{width:80px;flex-shrink:0}
+      .crop-preview-panel__label{display:none}
+      .crop-modal__tools{justify-content:center}
+      .crop-tool-btn--confirm{margin-left:0}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="adm-head">
+    <div class="adm-head__brand">
+      <img class="adm-head__logo" src="/assets/brand/logo-horizontal-naranja.jpg" alt="Bárbaros">
+      <span class="adm-head__title">Panel Admin</span>
+    </div>
+    <div class="adm-head__actions">
+      <span class="adm-head__user" id="headerUser"></span>
+      <button class="adm-btn adm-btn--sec adm-btn--sm" id="logoutBtn" style="display:none">Salir</button>
+    </div>
+  </header>
+
+  <!-- LOGIN -->
+  <div id="loginPanel">
+    <div class="adm-login">
+      <img class="adm-login__logo" src="/assets/brand/logo-horizontal-naranja.jpg" alt="Bárbaros">
+      <h2>Panel Administrativo</h2>
+      <p>Gestiona tu menú digital</p>
+      <div class="adm-field"><label>Usuario</label><input id="loginUser" value="admin"></div>
+      <div class="adm-field"><label>Contraseña</label><input id="loginPass" type="password" value="admin123"></div>
+      <button class="adm-btn adm-btn--pri adm-btn--full" id="loginBtn">Ingresar</button>
+      <p id="loginMsg" class="adm-msg"></p>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="appPanel" style="display:none">
+    <div class="adm-layout">
+      <!-- LEFT: product list -->
+      <div>
+        <div class="adm-panel" style="margin-bottom:16px">
+          <div class="adm-panel__head"><span>Negocio</span></div>
+          <div class="adm-edit">
+            <div class="adm-field--inline"><label>Nombre restaurante</label><input id="brandName"></div>
+            <div class="adm-field--inline" style="margin-top:10px"><label>WhatsApp (573...)</label><input id="brandWhatsapp"></div>
+          </div>
+        </div>
+        <div class="adm-panel">
+          <div class="adm-panel__head">
+            <span>Productos</span>
+            <button class="adm-btn adm-btn--pri adm-btn--sm" id="newProductBtn">+ Nuevo</button>
+          </div>
+          <div class="adm-list-search">
+            <input id="productSearch" placeholder="Buscar producto...">
+          </div>
+          <div class="adm-list" id="productList"></div>
+        </div>
+
+        <div class="adm-panel" style="margin-top:14px" id="extrasPanel">
+          <div class="adm-panel__head">
+            <span>🧀 Extras (toppings)</span>
+          </div>
+          <div class="adm-edit" id="extrasEdit"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: editor -->
+      <div class="adm-panel" id="editorPanel">
+        <div class="adm-panel__head">
+          <span>Editor</span>
+          <div class="adm-row">
+            <button class="adm-btn adm-btn--sec adm-btn--sm" id="duplicateBtn" style="display:none">Duplicar</button>
+            <button class="adm-btn adm-btn--danger adm-btn--sm" id="deleteBtn" style="display:none">Eliminar</button>
+            <button class="adm-btn adm-btn--pri" id="saveBtn">Guardar</button>
+          </div>
+        </div>
+        <div class="adm-edit">
+          <div id="emptyEditor" class="adm-edit__empty">
+            <div class="adm-edit__empty-icon">📋</div>
+            <p>Selecciona un producto de la lista</p>
+          </div>
+          <div id="productEditor" style="display:none">
+            <div class="adm-preview-wrap" style="width:100%;position:relative;background:var(--bg);border-radius:var(--radius-sm);aspect-ratio:16/9;overflow:hidden" id="imgPreviewWrap">
+              <img id="previewImg" alt="Preview" style="width:100%;height:100%;object-fit:cover;display:block">
+            </div>
+            <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+              <button class="adm-btn adm-btn--sec adm-btn--sm" id="editImgBtn">Editar imagen</button>
+              <span style="font-size:.68rem;color:var(--muted)">Abre el editor de recorte con la imagen actual</span>
+            </div>
+            <div id="productIdTag" style="display:none"></div>
+
+            <div class="adm-grid-2" style="margin-top:14px">
+              <div class="adm-field--inline"><label>Nombre</label><input id="fName"></div>
+              <div class="adm-field--inline"><label>Categoría</label><select id="fCategory"></select></div>
+            </div>
+            <div class="adm-field--inline" style="margin-top:12px"><label>Descripción</label><textarea id="fDescription"></textarea></div>
+
+            <div class="adm-grid-3" style="margin-top:12px">
+              <div class="adm-field--inline"><label>Tipo</label>
+                <select id="fAction">
+                  <option value="add">Agregar directo</option>
+                  <option value="builder">Personalizable</option>
+                  <option value="inquiry">Solo consulta</option>
+                </select>
+              </div>
+              <div class="adm-field--inline" id="fPriceField"><label>Precio (COP)</label><input id="fPrice" type="number" min="0"><p style="font-size:.68rem;color:var(--muted);margin-top:2px" id="fPriceHelp"></p></div>
+              <div class="adm-field--inline"><label>Subir imagen</label><input id="fUpload" type="file" style="padding:7px 0"></div>
+            </div>
+            <div class="adm-field--inline" style="margin-top:12px"><label>Ruta imagen</label><input id="fImage"></div>
+
+            <div class="adm-variants" style="margin-top:12px">
+              <div class="adm-variants__title">Variantes de precio</div>
+              <p class="adm-variants__hint">Solo aplica para productos "Personalizable". El menú usa estos precios.</p>
+              <div id="variantsBox"></div>
+              <button class="adm-btn adm-btn--sec adm-btn--sm" id="addVariantBtn" type="button">+ Agregar variante</button>
+              <p class="adm-preview-price" id="pricePreviewText"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST (top-level) -->
+  <div class="adm-toast" id="admToast"></div>
+
+  <!-- CROP EDITOR MODAL -->
+  <div class="crop-overlay" id="cropOverlay">
+    <div class="crop-modal">
+      <div class="crop-modal__head">
+        <h3>Recortar imagen (16:9)</h3>
+        <button class="adm-btn adm-btn--danger" id="cropCloseBtn" title="Cerrar">&times;</button>
+      </div>
+      <div class="crop-modal__body">
+        <div class="crop-canvas-wrap" id="cropCanvasWrap">
+          <canvas id="cropCanvas"></canvas>
+        </div>
+        <div class="crop-preview-panel">
+          <span class="crop-preview-panel__label">Resultado final</span>
+          <div class="crop-preview-box">
+            <canvas id="cropResultPreview"></canvas>
+          </div>
+          <span style="font-size:.62rem;color:var(--muted)">Asi se vera en las cards</span>
+        </div>
+      </div>
+      <div class="crop-modal__tools">
+        <button class="crop-tool-btn" id="cropRotateLeft" title="Zoom +">+</button>
+        <button class="crop-tool-btn" id="cropRotateRight" title="Zoom -">&minus;</button>
+        <button class="crop-tool-btn" id="cropZoomIn" title="Zoom ++">++</button>
+        <button class="crop-tool-btn" id="cropZoomOut" title="Zoom --">&minus;&minus;</button>
+        <button class="crop-tool-btn" id="cropReset" title="Centrar y reiniciar">Centrar</button>
+        <span style="font-size:.68rem;color:var(--muted);margin:0 4px">Fondo:</span>
+        <button class="crop-tool-btn" onclick="cambiarFondo('transparent')" style="font-size:.68rem">Transp.</button>
+        <button class="crop-tool-btn" onclick="cambiarFondo('#000000')" style="font-size:.68rem;background:#000;color:#fff">Negro</button>
+        <button class="crop-tool-btn" onclick="cambiarFondo('#ffffff')" style="font-size:.68rem">Blanco</button>
+        <input type="color" id="cropBgColor" onchange="cambiarFondo(this.value)" title="Color personalizado" style="width:28px;height:28px;border:none;border-radius:4px;cursor:pointer;padding:0">
+        <button class="crop-tool-btn crop-tool-btn--confirm" id="cropConfirmBtn">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/src/admin/admin.js"></script>
+</body>
+</html>

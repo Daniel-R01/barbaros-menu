@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Bárbaros Burguer | Menú</title>
+  <meta name="theme-color" content="#FFA301">
+  <meta name="description" content="Menú digital interactivo de Bárbaros Burguer. Arma tu pedido paso a paso.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png">
+  <link rel="stylesheet" href="./src/css/propuesta-v4.css">
+</head>
+<body>
+
+  <!-- SKELETON LOADING -->
+  <div class="v4-skeleton" id="skeleton">
+    <div class="sk-hero"></div>
+    <div class="sk-row">
+      <div class="sk-card"></div><div class="sk-card"></div><div class="sk-card"></div>
+    </div>
+    <div class="sk-row">
+      <div class="sk-card"></div><div class="sk-card"></div><div class="sk-card"></div>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div class="v4-app" id="app" style="display:none">
+
+    <!-- HERO -->
+    <header class="v4-hero">
+      <img class="v4-hero__logo" src="./assets/brand/logo-horizontal-naranja.jpg" alt="Bárbaros Burguer">
+      <div class="v4-hero__badge">SINCE 2014</div>
+      <h1 class="v4-hero__title">COME COMO UN<br><span>BÁRBARO</span></h1>
+      <p class="v4-hero__sub">Arma tu pedido: base + proteína + topping</p>
+    </header>
+
+    <!-- CATEGORY SECTIONS -->
+    <div class="v4-sections" id="v4Sections"></div>
+
+    <!-- EXTRAS SECTION -->
+    <div class="v4-sections" id="v4ExtrasSection"></div>
+
+    <!-- INLINE CART PANEL -->
+    <div class="v4-cart-inline" id="v4CartInline" style="display:none">
+      <div class="v4-cart-inline__head">
+        <button class="v4-cart-inline__back" id="cartInlineBack">&larr; Menú</button>
+        <h2>Tu Pedido</h2>
+        <span class="v4-cart-inline__count" id="cartInlineCount">0 items</span>
+      </div>
+      <div class="v4-cart-inline__items" id="cartInlineItems"></div>
+      <div class="v4-cart-inline__foot">
+        <div class="v4-cart-inline__total">
+          <span>Total</span>
+          <strong id="cartInlineTotal">$0</strong>
+        </div>
+        <button class="v4-cart-inline__clear" id="cartInlineClear">Vaciar carrito</button>
+        <button class="v4-btn v4-btn--whatsapp" id="cartInlineWA">Pedir por WhatsApp</button>
+        <button class="v4-btn v4-btn--server" id="cartInlineServer">Mostrar a mesero</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERSISTENT CART BAR -->
+  <div class="v4-cartbar" id="v4CartBar">
+    <div class="v4-cartbar__info">
+      <span class="v4-cartbar__icon">🛒</span>
+      <span class="v4-cartbar__count" id="cartBarCount">0</span>
+      <span class="v4-cartbar__total" id="cartBarTotal">$0</span>
+    </div>
+    <button class="v4-cartbar__btn" id="cartBarBtn">Ver pedido →</button>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="v4-bnav" id="v4BottomNav">
+    <button class="v4-bnav__item is-active" data-nav="bases">
+      <span class="v4-bnav__icon">🍔</span>
+      <span class="v4-bnav__label">Bases</span>
+    </button>
+    <button class="v4-bnav__item" data-nav="especialidades">
+      <span class="v4-bnav__icon">⭐</span>
+      <span class="v4-bnav__label">Especiales</span>
+    </button>
+    <button class="v4-bnav__item" data-nav="entradas">
+      <span class="v4-bnav__icon">🍟</span>
+      <span class="v4-bnav__label">Entradas</span>
+    </button>
+    <button class="v4-bnav__item" data-nav="bebidas">
+      <span class="v4-bnav__icon">🥤</span>
+      <span class="v4-bnav__label">Bebidas</span>
+    </button>
+    <button class="v4-bnav__item" data-nav="extras">
+      <span class="v4-bnav__icon">🧀</span>
+      <span class="v4-bnav__label">Extras</span>
+    </button>
+  </nav>
+
+  <!-- BUILDER WIZARD -->
+  <div class="v4-wizard" id="v4Wizard">
+    <div class="v4-wizard__inner">
+      <header class="v4-wizard__head">
+        <button class="v4-wizard__back" id="wizBack">&larr;</button>
+        <div class="v4-wizard__steps" id="wizSteps">
+          <span class="wiz-step is-active" data-step="1">1</span>
+          <span class="wiz-connector"></span>
+          <span class="wiz-step" data-step="2">2</span>
+          <span class="wiz-connector"></span>
+          <span class="wiz-step" data-step="3">3</span>
+        </div>
+        <button class="v4-wizard__close" id="wizClose">&times;</button>
+      </header>
+      <div class="v4-wizard__body" id="wizBody"></div>
+      <footer class="v4-wizard__foot" id="wizFoot">
+        <div class="v4-wizard__total">
+          <span>Total</span>
+          <strong id="wizTotal">$0</strong>
+        </div>
+        <button class="v4-wizard__next" id="wizNext">Siguiente &rarr;</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- TICKET VIEW -->
+  <div class="v4-ticket-overlay" id="v4TicketOverlay">
+    <div class="v4-ticket">
+      <div class="v4-ticket__head">
+        <h2>MI PEDIDO</h2>
+        <button class="v4-ticket__close" id="ticketClose">&times;</button>
+      </div>
+      <div class="v4-ticket__body" id="ticketBody"></div>
+      <div class="v4-ticket__actions">
+        <button class="v4-btn v4-btn--whatsapp" id="ticketWhatsApp">Pedir por WhatsApp</button>
+        <button class="v4-btn v4-btn--server" id="ticketShowServer">Mostrar a mesero</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOW TO SERVER MODE -->
+  <div class="v4-server-mode" id="v4ServerMode">
+    <div class="v4-server-mode__inner">
+      <h2>MI PEDIDO</h2>
+      <div id="serverOrder"></div>
+      <button class="v4-btn v4-btn--dark" id="serverBack">Volver</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="v4-toast" id="v4Toast">
+    <span class="v4-toast__icon">✅</span>
+    <span class="v4-toast__msg" id="toastMsg">Agregado al pedido</span>
+  </div>
+
+  <!-- DELIVERY MODAL -->
+  <div class="v4-delivery-overlay" id="v4DeliveryOverlay">
+    <div class="v4-delivery">
+      <div class="v4-delivery__head">
+        <h3>¿Cómo lo quieres?</h3>
+        <button class="v4-delivery__close" id="deliveryClose">&times;</button>
+      </div>
+      <div class="v4-delivery__body">
+        <button class="v4-delivery__option" id="deliveryPickup">
+          <span class="v4-delivery__icon">🏠</span>
+          <span>Recoger en el restaurante</span>
+        </button>
+        <button class="v4-delivery__option" id="deliveryAddrBtn">
+          <span class="v4-delivery__icon">🛵</span>
+          <span>A domicilio</span>
+        </button>
+        <div class="v4-delivery__addr" id="deliveryAddrBox" style="display:none">
+          <input type="text" id="deliveryAddrInput" placeholder="Dirección de entrega (opcional)">
+          <button class="v4-btn v4-btn--whatsapp" id="deliverySend">Enviar pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./src/js/propuesta-v4.js"></script>
+</body>
+</html>

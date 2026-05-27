@@ -1,0 +1,58 @@
+{
+  "admin": {
+    "username": "admin",
+    "passwordHash": "$2a$10$0heUhoh4fooVF3YQ.VHjK.H5dwYuj3sH.XN0T7zrCutTwXQCLnq5e"
+  },
+  "brand": {
+    "name": "Bárbaros Burguer",
+    "shortName": "Bárbaros",
+    "slogan": "Come como un bárbaro",
+    "since": "2014",
+    "address": "cll 7a #9-69 barrio palmarito",
+    "phone": "3124872685",
+    "instagram": "@barbarosburguertau",
+    "whatsappNumber": "573124872685",
+    "fallbackImage": "./assets/brand/logo-vertical-fondo-naranja.jpg"
+  },
+  "theme": {
+    "primary": "#FFA301",
+    "secondary": "#051B39",
+    "light": "#FBFBFA",
+    "white": "#FFFFFF",
+    "accent": "#FFB98D"
+  },
+  "categories": [
+    {
+      "id": "bases",
+      "label": "Bases",
+      "description": "Arma la tuya o pide directo"
+    },
+    {
+      "id": "especialidades",
+      "label": "Especialidades",
+      "description": "Platos destacados de la casa"
+    },
+    {
+      "id": "entradas",
+      "label": "Entradas",
+      "description": "Para compartir"
+    },
+    {
+      "id": "bebidas",
+      "label": "Bebidas",
+      "description": "Refresca tu pedido"
+    }
+  ],
+  "builderRules": {
+    "comboLabel": "Base + proteína + topping",
+    "allowAnyAddon": true,
+    "maxAddons": null
+  },
+  "addons": {
+    "proteins": [],
+    "toppings": [],
+    "freeSauces": [],
+    "premiumSauces": []
+  },
+  "products": []
+}
