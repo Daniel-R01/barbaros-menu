@@ -1,7 +1,7 @@
 {
   "admin": {
     "username": "admin",
-    "passwordHash": "$2a$10$0heUhoh4fooVF3YQ.VHjK.H5dwYuj3sH.XN0T7zrCutTwXQCLnq5e"
+    "passwordHash": "$2a$10$GDLOFfkpzCbIoqSRndjfdebSdy3v7zA5JxZQJsnzm6x9TdxQ8m7Q."
   },
   "brand": {
     "name": "Bárbaros Burguer",
