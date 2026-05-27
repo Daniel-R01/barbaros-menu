@@ -68,7 +68,7 @@
   els.duplicateBtn.onclick = duplicateCurrent;
   els.deleteBtn.onclick = deleteCurrent;
   els.addVariantBtn.onclick = addVariant;
-  els.fUpload.onchange = openCropperOnUpload;
+  els.fUpload.onchange = openEditorOnUpload;
 
   var cropEditor = {
     canvas: null, ctx: null, image: null,
@@ -79,7 +79,7 @@
     FRAME_W: 800, FRAME_H: 450
   };
 
-  function openCropperOnUpload(e) {
+  function openEditorOnUpload(e) {
     var file = e.target.files?.[0];
     if (!file) return;
     abrirEditor(file);
