@@ -5,7 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
 const sharp = require("sharp");
-const archiver = require("archiver");
+const AdmZip = require("adm-zip");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -150,11 +150,8 @@ app.post("/api/admin/upload", requireAdmin, upload.single("image"), async (req, 
 app.get("/api/admin/download-data", requireAdmin, (req, res) => {
   try {
     var menu = readMenu();
-    var archive = archiver("zip", { zlib: { level: 9 } });
-    res.setHeader("Content-Type", "application/zip");
-    res.setHeader("Content-Disposition", 'attachment; filename="barbaros-backup.zip"');
-    archive.pipe(res);
-    archive.append(JSON.stringify(menu, null, 2), { name: "menu.json" });
+    var zip = new AdmZip();
+    zip.addFile("menu.json", Buffer.from(JSON.stringify(menu, null, 2), "utf8"));
     var images = new Set();
     (menu.products || []).forEach(function (p) {
       if (p.image && p.image.startsWith("./assets/")) images.add(p.image.replace(/^\.\//, ""));
@@ -164,11 +161,40 @@ app.get("/api/admin/download-data", requireAdmin, (req, res) => {
     }
     images.forEach(function (relPath) {
       var absPath = path.join(ROOT, relPath);
-      if (fs.existsSync(absPath)) archive.file(absPath, { name: relPath });
+      if (fs.existsSync(absPath)) zip.addLocalFile(absPath);
     });
-    archive.finalize();
+    var buf = zip.toBuffer();
+    res.setHeader("Content-Type", "application/zip");
+    res.setHeader("Content-Disposition", 'attachment; filename="barbaros-backup.zip"');
+    res.send(buf);
   } catch (err) {
     res.status(500).json({ error: err?.message || "Error creando backup" });
+  }
+});
+
+app.post("/api/admin/restore", requireAdmin, upload.single("backup"), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: "Archivo ZIP faltante" });
+  try {
+    var zip = new AdmZip(req.file.buffer);
+    var entries = zip.getEntries();
+    var restored = 0;
+    entries.forEach(function (entry) {
+      if (entry.isDirectory) return;
+      var name = entry.entryName.replace(/\\/g, "/");
+      if (name === "menu.json") {
+        var data = JSON.parse(entry.getData().toString("utf8"));
+        writeMenu(data);
+        restored++;
+      } else if (name.startsWith("assets/products/") || name.startsWith("assets/brand/")) {
+        var dest = path.join(ROOT, name);
+        try { fs.mkdirSync(path.dirname(dest), { recursive: true }); } catch (_) {}
+        fs.writeFileSync(dest, entry.getData());
+        restored++;
+      }
+    });
+    res.json({ ok: true, restored: restored });
+  } catch (err) {
+    res.status(500).json({ error: err?.message || "Error restaurando backup" });
   }
 });
 

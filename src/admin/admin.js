@@ -54,7 +54,10 @@
     pricePreviewText: $("pricePreviewText"),
     headerUser: $("headerUser"),
     admToast: $("admToast"),
-    extrasEdit: $("extrasEdit")
+    extrasEdit: $("extrasEdit"),
+    backupDownloadBtn: $("backupDownloadBtn"),
+    backupRestoreBtn: $("backupRestoreBtn"),
+    backupFileInput: $("backupFileInput")
   };
 
   els.loginBtn.onclick = login;
@@ -655,6 +658,45 @@
     selectedId = menu.products?.[0]?.id || null;
     renderList(); renderEditor(); toast("Producto eliminado. Guarda para confirmar.", "ok"); markDirty();
   }
+
+  // ---------- BACKUP ----------
+  els.backupDownloadBtn.onclick = function () {
+    window.open("/api/admin/download-data", "_blank");
+  };
+
+  els.backupRestoreBtn.onclick = function () {
+    els.backupFileInput.click();
+  };
+
+  els.backupFileInput.onchange = function () {
+    var file = this.files && this.files[0];
+    if (!file) return;
+    if (!file.name.toLowerCase().endsWith(".zip")) {
+      toast("Selecciona un archivo .zip", "err");
+      return;
+    }
+    var btn = els.backupRestoreBtn;
+    btn.disabled = true;
+    btn.textContent = "Restaurando...";
+    var fd = new FormData();
+    fd.append("backup", file);
+    fetch("/api/admin/restore", { method: "POST", body: fd })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+      .then(function (r) {
+        btn.disabled = false;
+        btn.textContent = "Importar";
+        els.backupFileInput.value = "";
+        if (!r.ok) return toast("Error: " + (r.data.error || "fallo"), "err");
+        toast("Backup restaurado (" + r.data.restored + " archivos). Recarga la pagina.", "ok");
+        setTimeout(function () { location.reload(); }, 1500);
+      })
+      .catch(function (e) {
+        btn.disabled = false;
+        btn.textContent = "Importar";
+        els.backupFileInput.value = "";
+        toast("Error: " + (e.message || "conexion"), "err");
+      });
+  };
 
   // ---------- EXTRAS / ADDONS EDITOR ----------
   const extrasGroups = [
