@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
 const sharp = require("sharp");
+const archiver = require("archiver");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -143,6 +144,31 @@ app.post("/api/admin/upload", requireAdmin, upload.single("image"), async (req, 
     }
   } catch (err) {
     res.status(500).json({ error: err?.message || "Error procesando imagen" });
+  }
+});
+
+app.get("/api/admin/download-data", requireAdmin, (req, res) => {
+  try {
+    var menu = readMenu();
+    var archive = archiver("zip", { zlib: { level: 9 } });
+    res.setHeader("Content-Type", "application/zip");
+    res.setHeader("Content-Disposition", 'attachment; filename="barbaros-backup.zip"');
+    archive.pipe(res);
+    archive.append(JSON.stringify(menu, null, 2), { name: "menu.json" });
+    var images = new Set();
+    (menu.products || []).forEach(function (p) {
+      if (p.image && p.image.startsWith("./assets/")) images.add(p.image.replace(/^\.\//, ""));
+    });
+    if (menu.brand && menu.brand.fallbackImage && menu.brand.fallbackImage.startsWith("./assets/")) {
+      images.add(menu.brand.fallbackImage.replace(/^\.\//, ""));
+    }
+    images.forEach(function (relPath) {
+      var absPath = path.join(ROOT, relPath);
+      if (fs.existsSync(absPath)) archive.file(absPath, { name: relPath });
+    });
+    archive.finalize();
+  } catch (err) {
+    res.status(500).json({ error: err?.message || "Error creando backup" });
   }
 });
 
